@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create your Edu2Job account">
+    <title>Register - Edu2Job</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .auth-container {
+            display: flex;
+            max-width: 1100px;
+            width: 100%;
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+
+        .auth-form-section {
+            flex: 1;
+            padding: 3rem 2.5rem;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .auth-brand-section {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 3rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-brand-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        .illustration-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        .illustration-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .brand-tagline {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-2xl);
+            opacity: 0.95;
+            text-align: center;
+        }
+
+        .benefit-list {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-base);
+        }
+
+        .benefit-icon {
+            width: 2rem;
+            height: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .auth-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .auth-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .auth-subtitle {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            padding: var(--spacing-xs) var(--spacing-sm);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-dark);
+        }
+
+        .password-strength {
+            height: 4px;
+            background: var(--gray-200);
+            border-radius: var(--radius-full);
+            margin-top: var(--spacing-sm);
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all var(--transition-base);
+            border-radius: var(--radius-full);
+        }
+
+        .strength-weak { width: 33%; background: var(--error); }
+        .strength-medium { width: 66%; background: var(--warning); }
+        .strength-strong { width: 100%; background: var(--success); }
+
+        .divider {
+            text-align: center;
+            margin: var(--spacing-xl) 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            background: var(--bg-primary);
+            padding: 0 var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .auth-link a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 968px) {
+            .auth-brand-section {
+                display: none;
+            }
+
+            .auth-form-section {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-form-section">
+            <div class="auth-header">
+                <h1 class="auth-title">Create Account</h1>
+                <p class="auth-subtitle">Start your career journey today</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        class="form-control" 
+                        placeholder="Choose a username"
+                        required
+                        autocomplete="username"
+                        minlength="3"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-control" 
+                        placeholder="your.email@example.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="password-field">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-control" 
+                            placeholder="Create a strong password"
+                            required
+                            autocomplete="new-password"
+                            minlength="6"
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')">Show</button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <small class="form-text">Must be at least 6 characters with uppercase, lowercase, and numbers</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <div class="password-field">
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            class="form-control" 
+                            placeholder="Re-enter your password"
+                            required
+                            autocomplete="new-password"
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">Show</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="securityQuestion">Security Question</label>
+                    <select id="securityQuestion" class="form-control" required>
+                        <option value="">Select a security question</option>
+                        <option value="pet">What was the name of your first pet?</option>
+                        <option value="city">In what city were you born?</option>
+                        <option value="school">What is the name of your elementary school?</option>
+                        <option value="book">What is your favorite book?</option>
+                        <option value="food">What is your favorite food?</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="securityAnswer">Security Answer</label>
+                    <input 
+                        type="text" 
+                        id="securityAnswer" 
+                        class="form-control" 
+                        placeholder="Your answer"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                    Create Account
+                </button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="auth-link">
+                    Already have an account? <a href="login.html">Sign In</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-brand-section">
+            <div class="illustration-container">
+                <svg class="illustration-svg" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Career Growth Illustration -->
+                    <circle cx="250" cy="200" r="120" fill="rgba(255,255,255,0.1)"/>
+                    <circle cx="250" cy="200" r="90" fill="rgba(255,255,255,0.15)"/>
+                    <circle cx="250" cy="200" r="60" fill="rgba(255,255,255,0.2)"/>
+                    
+                    <!-- Person Icon -->
+                    <circle cx="250" cy="180" r="25" fill="white" opacity="0.9"/>
+                    <path d="M 250 210 Q 230 230 220 260 L 280 260 Q 270 230 250 210 Z" fill="white" opacity="0.9"/>
+                    
+                    <!-- Career Path Steps -->
+                    <rect x="150" y="280" width="60" height="8" rx="4" fill="white" opacity="0.8"/>
+                    <rect x="180" y="300" width="80" height="8" rx="4" fill="white" opacity="0.8"/>
+                    <rect x="220" y="320" width="100" height="8" rx="4" fill="white" opacity="0.8"/>
+                    
+                    <!-- Success Stars -->
+                    <path d="M 100 80 L 105 95 L 120 97 L 110 107 L 113 122 L 100 114 L 87 122 L 90 107 L 80 97 L 95 95 Z" fill="white" opacity="0.7"/>
+                    <path d="M 400 100 L 405 115 L 420 117 L 410 127 L 413 142 L 400 134 L 387 142 L 390 127 L 380 117 L 395 115 Z" fill="white" opacity="0.7"/>
+                    <path d="M 380 280 L 385 295 L 400 297 L 390 307 L 393 322 L 380 314 L 367 322 L 370 307 L 360 297 L 375 295 Z" fill="white" opacity="0.6"/>
+                    
+                    <!-- Floating Elements -->
+                    <circle cx="120" cy="150" r="15" fill="rgba(255,255,255,0.3)"/>
+                    <circle cx="380" cy="200" r="20" fill="rgba(255,255,255,0.25)"/>
+                    <circle cx="150" cy="320" r="12" fill="rgba(255,255,255,0.3)"/>
+                </svg>
+            </div>
+            
+            <div class="brand-logo" style="position: relative; z-index: 1;">Edu2Job</div>
+            <div class="brand-tagline" style="position: relative; z-index: 1;">Start Your Career Journey Today</div>
+            
+            <div class="benefit-list" style="position: relative; z-index: 1;">
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>Free Account Setup</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>Unlimited Career Predictions</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>Track Your Progress</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>Join Growing Community</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" style="position: fixed; top: 1rem; right: 1rem; z-index: 2000;"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            const colors = {
+                'success': '#10b981',
+                'error': '#ef4444',
+                'warning': '#f59e0b',
+                'info': '#3b82f6'
+            };
+            
+            toast.className = 'toast toast-' + type;
+            toast.style.cssText = `
+                background: white;
+                border-left: 4px solid ${colors[type]};
+                border-radius: var(--radius-md);
+                padding: 1rem 1.25rem;
+                box-shadow: var(--shadow-lg);
+                max-width: 400px;
+                margin-bottom: var(--spacing-sm);
+            `;
+            
+            toast.innerHTML = `
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">
+                    ${type.charAt(0).toUpperCase() + type.slice(1)}
+                </div>
+                <div style="color: var(--text-secondary); font-size: var(--font-size-sm);">
+                    ${message}
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const btn = event.target;
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                btn.textContent = 'Hide';
+            } else {
+                field.type = 'password';
+                btn.textContent = 'Show';
+            }
+        }
+
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('strengthBar');
+            
+            strengthBar.className = 'password-strength-bar';
+            
+            if (password.length === 0) {
+                strengthBar.style.width = '0%';
+            } else if (password.length < 6) {
+                strengthBar.classList.add('strength-weak');
+            } else if (password.length < 10) {
+                strengthBar.classList.add('strength-medium');
+            } else {
+                strengthBar.classList.add('strength-strong');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const securityQuestion = document.getElementById('securityQuestion').value;
+            const securityAnswer = document.getElementById('securityAnswer').value.trim();
+            
+            // Validation
+            if (!username || !email || !password || !confirmPassword || !securityQuestion || !securityAnswer) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            if (username.length < 3) {
+                showToast('Username must be at least 3 characters long', 'error');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters long', 'error');
+                return;
+            }
+
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+
+            if (!(hasUpperCase && hasLowerCase && hasNumbers)) {
+                showToast('Password must contain uppercase, lowercase, and numbers', 'error');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Creating account...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        password: password,
+                        security_question: securityQuestion,
+                        security_answer: securityAnswer
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showToast('Account created successfully! Redirecting to login...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    showToast(data.message || 'Registration failed. Please try again.', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Create Account';
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showToast('Unable to connect to server. Please try again later.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account';
+            }
+        });
+
+        // Check if already logged in
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edu2Job - AI-powered career path prediction platform">
+    <title>Login - Edu2Job</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .auth-container {
+            display: flex;
+            max-width: 1100px;
+            width: 100%;
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+
+        .auth-form-section {
+            flex: 1;
+            padding: 3rem 2.5rem;
+        }
+
+        .auth-brand-section {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 3rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-brand-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        .illustration-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        .illustration-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .brand-tagline {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-2xl);
+            opacity: 0.95;
+            text-align: center;
+        }
+
+        .feature-list {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-base);
+        }
+
+        .feature-icon {
+            width: 2rem;
+            height: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .auth-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .auth-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .auth-subtitle {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            padding: var(--spacing-xs) var(--spacing-sm);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-dark);
+        }
+
+        .form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-wrapper label {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .forgot-link {
+            font-size: var(--font-size-sm);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .forgot-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .divider {
+            text-align: center;
+            margin: var(--spacing-xl) 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            background: var(--bg-primary);
+            padding: 0 var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .auth-link a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 968px) {
+            .auth-brand-section {
+                display: none;
+            }
+
+            .auth-form-section {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-form-section">
+            <div class="auth-header">
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to continue your career journey</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-control" 
+                        placeholder="Enter your email"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="password-field">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-control" 
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword()">Show</button>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="forget.html" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                    Sign In
+                </button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="auth-link">
+                    Don't have an account? <a href="register.html">Create Account</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-brand-section">
+            <div class="illustration-container">
+                <svg class="illustration-svg" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- AI/Tech Illustration for Login -->
+                    <circle cx="250" cy="200" r="100" fill="rgba(255,255,255,0.1)"/>
+                    <circle cx="250" cy="200" r="70" fill="rgba(255,255,255,0.15)"/>
+                    
+                    <!-- Laptop/Screen -->
+                    <rect x="180" y="160" width="140" height="90" rx="8" fill="white" opacity="0.9"/>
+                    <rect x="190" y="170" width="120" height="65" rx="4" fill="rgba(102, 126, 234, 0.3)"/>
+                    <rect x="220" y="250" width="60" height="8" rx="4" fill="white" opacity="0.8"/>
+                    
+                    <!-- Data/Analytics Icons -->
+                    <circle cx="210" cy="190" r="8" fill="rgba(102, 126, 234, 0.8)"/>
+                    <circle cx="230" cy="190" r="8" fill="rgba(118, 75, 162, 0.8)"/>
+                    <circle cx="250" cy="190" r="8" fill="rgba(240, 147, 251, 0.8)"/>
+                    
+                    <!-- Chart Bars -->
+                    <rect x="200" y="210" width="12" height="20" rx="2" fill="white" opacity="0.8"/>
+                    <rect x="220" y="200" width="12" height="30" rx="2" fill="white" opacity="0.8"/>
+                    <rect x="240" y="195" width="12" height="35" rx="2" fill="white" opacity="0.8"/>
+                    <rect x="260" y="205" width="12" height="25" rx="2" fill="white" opacity="0.8"/>
+                    <rect x="280" y="198" width="12" height="32" rx="2" fill="white" opacity="0.8"/>
+                    
+                    <!-- Floating Elements -->
+                    <circle cx="140" cy="120" r="18" fill="rgba(255,255,255,0.25)"/>
+                    <circle cx="360" cy="150" r="22" fill="rgba(255,255,255,0.2)"/>
+                    <circle cx="120" cy="280" r="15" fill="rgba(255,255,255,0.3)"/>
+                    <circle cx="380" cy="280" r="20" fill="rgba(255,255,255,0.25)"/>
+                    
+                    <!-- Stars/Success Icons -->
+                    <path d="M 400 90 L 404 102 L 417 104 L 408 112 L 411 125 L 400 118 L 389 125 L 392 112 L 383 104 L 396 102 Z" fill="white" opacity="0.7"/>
+                    <path d="M 100 100 L 104 112 L 117 114 L 108 122 L 111 135 L 100 128 L 89 135 L 92 122 L 83 114 L 96 112 Z" fill="white" opacity="0.6"/>
+                </svg>
+            </div>
+            
+            <div class="brand-logo" style="position: relative; z-index: 1;">Edu2Job</div>
+            <div class="brand-tagline" style="position: relative; z-index: 1;">Bridge Education to Employment</div>
+            
+            <div class="feature-list" style="position: relative; z-index: 1;">
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div>AI-Powered Career Predictions</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div>Personalized Job Recommendations</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div>Skills & Education Analysis</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div>Track Your Career Progress</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" style="position: fixed; top: 1rem; right: 1rem; z-index: 2000;"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            const colors = {
+                'success': '#10b981',
+                'error': '#ef4444',
+                'warning': '#f59e0b',
+                'info': '#3b82f6'
+            };
+            
+            toast.className = 'toast toast-' + type;
+            toast.style.cssText = `
+                background: white;
+                border-left: 4px solid ${colors[type]};
+                border-radius: var(--radius-md);
+                padding: 1rem 1.25rem;
+                box-shadow: var(--shadow-lg);
+                max-width: 400px;
+                margin-bottom: var(--spacing-sm);
+            `;
+            
+            toast.innerHTML = `
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">
+                    ${type.charAt(0).toUpperCase() + type.slice(1)}
+                </div>
+                <div style="color: var(--text-secondary); font-size: var(--font-size-sm);">
+                    ${message}
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        function togglePassword() {
+            const field = document.getElementById('password');
+            const btn = event.target;
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                btn.textContent = 'Hide';
+            } else {
+                field.type = 'password';
+                btn.textContent = 'Show';
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Signing in...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                        remember_me: rememberMe
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.access_token) {
+                        localStorage.setItem('authToken', data.access_token);
+                    }
+                    if (data.user) {
+                        localStorage.setItem('userInfo', JSON.stringify(data.user));
+                    }
+
+                    showToast('Login successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    showToast(data.message || 'Login failed. Please check your credentials.', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Sign In';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast('Unable to connect to server. Please try again later.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign In';
+            }
+        });
+
+        // Check if already logged in
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            fetch(`${API_BASE_URL}/verify-token`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valid) {
+                    window.location.href = 'dashboard.html';
+                }
+            })
+            .catch(err => console.error('Token verification error:', err));
+        }
+    </script>
+</body>
+</html>

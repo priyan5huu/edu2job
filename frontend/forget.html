@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu2Job - Reset Password</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #0073b1;
+            box-shadow: 0 0 0 3px rgba(0, 115, 177, 0.1);
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .toggle-btn:hover {
+            color: #764ba2;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .back-link a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">🔐</div>
+            <h1>Reset Your Password</h1>
+            <p class="subtitle">Don't worry, we'll help you recover your account</p>
+        </div>
+
+        <!-- Step 1: Email Verification -->
+        <div id="step1" class="step active">
+            <form id="emailForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your registered email" required>
+                </div>
+                <button type="submit" class="btn-primary">Continue</button>
+            </form>
+        </div>
+
+        <!-- Step 2: Security Question -->
+        <div id="step2" class="step">
+            <form id="securityForm">
+                <div class="form-group">
+                    <label>Security Question</label>
+                    <select id="securityQuestion" disabled>
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Your Answer</label>
+                    <input type="text" id="securityAnswer" placeholder="Enter your answer" required>
+                </div>
+                <button type="submit" class="btn-primary">Verify Answer</button>
+            </form>
+        </div>
+
+        <!-- Step 3: Reset Password -->
+        <div id="step3" class="step">
+            <form id="resetForm">
+                <div class="form-group">
+                    <label>New Password</label>
+                    <div class="password-toggle">
+                        <input type="password" id="newPassword" placeholder="Enter new password" required>
+                        <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">Show</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <div class="password-toggle">
+                        <input type="password" id="confirmPassword" placeholder="Re-enter new password" required>
+                        <button type="button" class="toggle-btn" onclick="togglePassword('confirmPassword')">Show</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Reset Password</button>
+            </form>
+        </div>
+
+        <!-- Step 4: Success -->
+        <div id="step4" class="step">
+            <div class="success-message">
+                <div class="success-icon">✅</div>
+                <h2 style="color: #10b981; margin-bottom: 0.5rem;">Password Reset Successful!</h2>
+                <p style="color: #64748b; margin-bottom: 1.5rem;">Your password has been successfully updated.</p>
+                <a href="login.html" class="btn-primary" style="display: inline-block; text-decoration: none; margin-top: 1rem;">Go to Login</a>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="login.html">← Back to Login</a>
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div id="errorToast" style="position: fixed; top: 20px; right: 20px; background: white; border-left: 4px solid #ef4444; border-radius: 8px; padding: 1rem 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: none; z-index: 9999; max-width: 400px;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.5rem;">❌</span>
+            <div>
+                <div style="font-weight: 600; color: #1a1a2e; margin-bottom: 0.25rem;">Error</div>
+                <div id="errorMessage" style="color: #64748b; font-size: 0.9rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+        let userEmail = '';
+
+        function showError(message) {
+            const toast = document.getElementById('errorToast');
+            document.getElementById('errorMessage').textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 5000);
+        }
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step' + stepNumber).classList.add('active');
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const btn = field.nextElementSibling;
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                btn.textContent = 'Hide';
+            } else {
+                field.type = 'password';
+                btn.textContent = 'Show';
+            }
+        }
+
+        let resetToken = '';
+
+        // Step 1: Email verification - Get reset token
+        document.getElementById('emailForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            
+            if (!email) {
+                showError('Please enter your email address');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending reset link...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/forgot-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    userEmail = email;
+                    
+                    // In development mode, backend returns the token
+                    if (data.token) {
+                        resetToken = data.token;
+                        showStep(3); // Skip security question, go to password reset
+                    } else {
+                        // In production, user would receive email
+                        showError('Password reset instructions sent to your email. Check your inbox.');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Continue';
+                    }
+                } else {
+                    // Show generic message to prevent email enumeration
+                    showError('If an account with that email exists, reset instructions have been sent.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Continue';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Unable to connect to server. Please try again later.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Continue';
+            }
+        });
+
+        // Step 2: Not used in current backend flow - security questions not implemented
+        document.getElementById('securityForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            showError('Security questions not implemented yet');
+        });
+
+        // Step 3: Reset password using token
+        document.getElementById('resetForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!newPassword || !confirmPassword) {
+                showError('Please fill in both password fields');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showError('Password must be at least 6 characters long');
+                return;
+            }
+
+            // Check password strength
+            const hasUpperCase = /[A-Z]/.test(newPassword);
+            const hasLowerCase = /[a-z]/.test(newPassword);
+            const hasNumbers = /\d/.test(newPassword);
+
+            if (!(hasUpperCase && hasLowerCase && hasNumbers)) {
+                showError('Password should contain uppercase, lowercase, and numbers');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Resetting...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/reset-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: resetToken,
+                        new_password: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStep(4);
+                } else {
+                    showError(data.message || 'Failed to reset password');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Reset Password';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Unable to connect to server. Please try again later.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Reset Password';
+            }
+        });
+    </script>
+</body>
+</html>
